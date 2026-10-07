@@ -28,6 +28,7 @@
       --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
     }
     * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
@@ -176,6 +177,29 @@
     .download-card .btn { background: #fff; color: var(--ink); }
     .download-card .mono { color: rgba(255,255,255,0.55); }
 
+
+    .download-card form, .download-card #welcome { display: grid; gap: 12px; }
+    .download-card p { margin: 0; }
+    .field { display: grid; gap: 6px; font-size: 13px; color: rgba(255,255,255,0.7); }
+    .field input {
+      font: inherit; font-size: 16px; color: #fff; padding: 12px 16px; border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.22); background: rgba(255,255,255,0.08); outline: none;
+    }
+    .field input::placeholder { color: rgba(255,255,255,0.35); }
+    .field input:focus { border-color: rgba(255,255,255,0.6); background: rgba(255,255,255,0.12); }
+    .check { display: flex; align-items: center; gap: 10px; font-size: 14px; color: rgba(255,255,255,0.8); }
+    .check input { width: 18px; height: 18px; accent-color: #ef6fae; }
+    .form-error { color: #ffb3d4 !important; font-size: 14px; }
+    .tiny { font-size: 12.5px; color: rgba(255,255,255,0.5) !important; }
+    .download-card .btn { justify-self: start; border: 0; cursor: pointer; font-family: inherit; }
+    .download-card .btn[disabled] { opacity: 0.6; cursor: default; }
+    .code-box {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 14px 16px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.25); background: rgba(255,255,255,0.08);
+    }
+    .code-box code { font-family: var(--mono); font-size: 20px; letter-spacing: 0.08em; color: #fff; }
+    .copy { font: inherit; font-size: 13px; color: #fff; background: transparent; border: 1px solid rgba(255,255,255,0.35); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+    .download-card kbd { background: rgba(255,255,255,.12); color: #fff; border-color: rgba(255,255,255,.3); }
     footer { padding: 50px 0 60px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; color: var(--ink-faint); font-size: 14px; }
 
     .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.8s ease, transform 0.8s ease; }
@@ -353,6 +377,7 @@
             <li>It only looks when you press the shortcut. Nothing runs in secret.</li>
             <li>Screenshots are read once and thrown away, never stored.</li>
             <li>Your study history lives on your own Mac.</li>
+            <li>We keep only your name and email, to give you access. Never sold.</li>
           </ul>
         </div>
       </div>
@@ -366,21 +391,34 @@
         <span class="mono">05 · Install</span>
         <h2 style="font-size: clamp(30px,3.6vw,44px); font-weight:500; letter-spacing:-0.03em; line-height:1.1; margin:14px 0 26px;">Up and running in <em class="accent">a minute.</em></h2>
         <ol>
-          <li><span><strong>Download</strong> the file and open it.</span></li>
+          <li><span><strong>Get your code</strong> with the form, then <strong>download</strong> the file and open it.</span></li>
           <li><span><strong>Drag Mobi</strong> into your Applications folder.</span></li>
           <li><span><strong>Open it once.</strong> Because this is an early beta, macOS will say it can't verify the app. Click Done.</span></li>
           <li><span>Go to <strong>System Settings → Privacy &amp; Security</strong>, scroll down, and click <strong>Open Anyway</strong>. You only do this once.</span></li>
-          <li><span>The first time you capture, allow <strong>Screen Recording</strong>, then reopen the app. You're set.</span></li>
+          <li><span><strong>Paste your access code</strong> when Mobi asks. The first time you capture, allow <strong>Screen Recording</strong>, then reopen the app. You're set.</span></li>
         </ol>
       </div>
       <div class="download-card reveal">
         <span class="mono">Beta 0.1 · macOS · Apple Silicon &amp; Intel</span>
         <h3>Get Mobi</h3>
-        <p>Free while in beta. Press <kbd style="background:rgba(255,255,255,.12); color:#fff; border-color:rgba(255,255,255,.3)">⌥ Space</kbd> anytime to show or hide it.</p>
-        <a class="btn" href="downloads/Mobi-0.1.0-mac.dmg" download>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14"/></svg>
-          Download for Mac · 6 MB
-        </a>
+        <form id="signup" novalidate>
+          <p>Free while in beta. Tell us who you are and you'll get your personal access code and the download.</p>
+          <label class="field"><span>Name</span><input name="name" autocomplete="given-name" placeholder="Ada" required maxlength="80" /></label>
+          <label class="field"><span>Email</span><input name="email" type="email" autocomplete="email" placeholder="ada@school.edu" required maxlength="200" /></label>
+          <label class="check"><input name="age" type="checkbox" /> I'm 13 or older</label>
+          <p class="form-error" id="signup-error" role="alert" hidden></p>
+          <button class="btn" type="submit" id="signup-btn">Get my code</button>
+          <p class="tiny">We only use your name and email to give you access and contact you about the beta. Never sold, never shared.</p>
+        </form>
+        <div id="welcome" hidden>
+          <p>You're in, <strong id="welcome-name"></strong>. This is your personal access code. Mobi asks for it once, the first time you open it.</p>
+          <div class="code-box"><code id="code"></code><button type="button" class="copy" id="copy">Copy</button></div>
+          <a class="btn" href="downloads/Mobi-0.1.0-mac.dmg" download>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14"/></svg>
+            Download for Mac · 8 MB
+          </a>
+          <p class="tiny">Keep your code private: it's yours alone. Press <kbd>⌥ Space</kbd> anytime to show or hide Mobi.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -444,6 +482,52 @@
         requestAnimationFrame(frame);
       }
       requestAnimationFrame(frame);
+    })();
+
+
+    // Sign-up: name + email + age → personal access code → download.
+    (function () {
+      const API = "https://study-tutor-api-sofia.fly.dev";
+      const form = document.getElementById("signup"), welcome = document.getElementById("welcome");
+      const err = document.getElementById("signup-error"), btn = document.getElementById("signup-btn");
+      const show = (name, code) => {
+        document.getElementById("welcome-name").textContent = name;
+        document.getElementById("code").textContent = code;
+        form.hidden = true; welcome.hidden = false;
+      };
+      try {
+        const saved = JSON.parse(localStorage.getItem("mobi.signup") || "null");
+        if (saved && saved.code) show(saved.name, saved.code);
+      } catch (e) { /* no saved sign-up */ }
+      const fail = (msg) => { err.textContent = msg; err.hidden = false; };
+      form.addEventListener("input", () => { err.hidden = true; });
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const name = form.name.value.trim(), email = form.email.value.trim();
+        if (!name) return fail("Enter your name.");
+        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return fail("Enter a valid email address.");
+        if (!form.age.checked) return fail("Mobi's beta is for students 13 and older.");
+        btn.disabled = true; btn.textContent = "Getting your code…";
+        try {
+          const res = await fetch(API + "/signup", {
+            method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, email, is_13_or_older: true }),
+          });
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok) throw new Error(typeof data.detail === "string" ? data.detail : "Something went wrong. Try again.");
+          try { localStorage.setItem("mobi.signup", JSON.stringify({ name, code: data.code })); } catch (e2) { /* fine */ }
+          show(name, data.code);
+        } catch (ex) {
+          fail(ex.message || "Couldn't reach Mobi. Check your connection and try again.");
+        } finally {
+          btn.disabled = false; btn.textContent = "Get my code";
+        }
+      });
+      document.getElementById("copy").addEventListener("click", async (e) => {
+        try { await navigator.clipboard.writeText(document.getElementById("code").textContent); e.target.textContent = "Copied"; }
+        catch (x) { e.target.textContent = "Select and copy"; }
+        setTimeout(() => (e.target.textContent = "Copy"), 1800);
+      });
     })();
 
     // Fade sections in as they scroll into view.
