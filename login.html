@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sign in to Mobi</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f6f4f5; --ink: #15172a; --soft: #55586b; --faint: #8d8fa0;
+      --line: rgba(21, 23, 42, 0.12); --line-strong: rgba(21, 23, 42, 0.26);
+      --teal: #57d2df; --blue: #6f8ff0; --pink: #ef6fae; --orange: #ffa45c; --sun: #ffd98f;
+      --sans: "Manrope", system-ui, -apple-system, sans-serif;
+      --serif: "Instrument Serif", Georgia, serif;
+      --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body {
+      margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px;
+      background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.55;
+      -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    }
+    body::before {
+      content: ""; position: fixed; width: 620px; height: 620px; border-radius: 50%; right: -220px; top: -260px;
+      background: conic-gradient(from 210deg, var(--teal), var(--blue), var(--pink), var(--orange), var(--sun), var(--teal));
+      filter: blur(70px); opacity: 0.45; z-index: -1;
+    }
+    body::after {
+      content: ""; position: fixed; inset: 0; pointer-events: none; opacity: 0.06;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    }
+    .card {
+      width: 100%; max-width: 420px; padding: 36px 32px 28px; border-radius: 26px;
+      background: rgba(255, 255, 255, 0.62); border: 1px solid var(--line); backdrop-filter: blur(14px);
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; text-decoration: none; color: inherit; margin-bottom: 26px; }
+    .brand svg { width: 20px; height: 20px; }
+    .mono { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); }
+    h1 { font-size: 32px; font-weight: 500; letter-spacing: -0.03em; line-height: 1.1; margin: 10px 0 10px; }
+    h1 em { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 1.1em; }
+    p { color: var(--soft); margin: 0 0 18px; }
+    .check { display: flex; align-items: center; gap: 10px; margin: 6px 0 18px; color: var(--ink); font-size: 15px; }
+    .check input { width: 18px; height: 18px; accent-color: var(--pink); }
+    .btn {
+      width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 13px 18px; border-radius: 999px; font: inherit; font-weight: 600; cursor: pointer;
+      border: 1px solid var(--line-strong); background: #fff; color: var(--ink); text-decoration: none;
+      transition: transform 0.15s ease;
+    }
+    .btn:hover:not([disabled]) { transform: translateY(-1px); }
+    .btn[disabled] { opacity: 0.45; cursor: default; }
+    .btn.primary { background: var(--ink); color: #fff; border-color: var(--ink); box-shadow: 0 10px 26px -12px rgba(239,111,174,.6), 0 6px 18px -12px rgba(87,210,223,.7); }
+    .or { display: flex; align-items: center; gap: 12px; margin: 18px 0; color: var(--faint); font-size: 13px; }
+    .or::before, .or::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+    input[type=email] {
+      width: 100%; font: inherit; padding: 12px 16px; border-radius: 14px; margin-bottom: 10px;
+      border: 1px solid var(--line-strong); background: rgba(255,255,255,0.8); outline: none;
+    }
+    input[type=email]:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(111,143,240,.15); }
+    .error { color: #c23b74; font-size: 14px; margin: 10px 0 0; }
+    .note { font-size: 13px; color: var(--faint); margin: 18px 0 0; }
+    .note a { color: inherit; }
+    .done-mark { width: 56px; height: 56px; margin-bottom: 6px; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <a class="brand" href="./">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#57d2df"/><stop offset=".5" stop-color="#ef6fae"/><stop offset="1" stop-color="#ffa45c"/></linearGradient></defs><path d="M12 1 C12.6 8.6 15.4 11.4 23 12 C15.4 12.6 12.6 15.4 12 23 C11.4 15.4 8.6 12.6 1 12 C8.6 11.4 11.4 8.6 12 1Z" fill="url(#g)"/></svg>
+      Mobi
+    </a>
+
+    <!-- Step 1: choose how to sign in -->
+    <section id="choose">
+      <span class="mono">Sign in</span>
+      <h1>Welcome to <em>Mobi.</em></h1>
+      <p>Sign in to start using Mobi. It's free during the beta.</p>
+      <label class="check"><input type="checkbox" id="age" /> I'm 13 or older</label>
+      <button class="btn primary" id="google" disabled>
+        <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3 0 5.8 1.1 7.9 3l5.7-5.7C34.1 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3 0 5.8 1.1 7.9 3l5.7-5.7C34.1 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>
+        Continue with Google
+      </button>
+      <div class="or">or</div>
+      <form id="email-form" novalidate>
+        <input type="email" id="email" placeholder="you@school.edu" autocomplete="email" />
+        <button class="btn" type="submit" id="email-btn" disabled>Email me a sign-in link</button>
+      </form>
+      <p class="error" id="error" role="alert" hidden></p>
+      <p class="note">We only use your name and email to give you access. Never sold, never shared.</p>
+    </section>
+
+    <!-- Step 2 (email): check your inbox -->
+    <section id="sent" hidden>
+      <span class="mono">Check your email</span>
+      <h1>Your link is <em>on its way.</em></h1>
+      <p>We sent a sign-in link to <b id="sent-to"></b>. Open it on this computer, in this browser.</p>
+      <button class="btn" id="back">Use a different email</button>
+    </section>
+
+    <!-- Step 3: signed in, hand off to the app -->
+    <section id="done" hidden>
+      <span class="mono">Signed in</span>
+      <h1>You're in, <em id="done-name">friend.</em></h1>
+      <p id="done-text">Opening Mobi… When your browser asks to open Mobi, click <b>Allow</b>.</p>
+      <a class="btn primary" id="open-app" href="#">Open Mobi</a>
+      <p class="note">Don't have Mobi yet? <a href="./#download">Download it here</a>, then come back.</p>
+    </section>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script>
+    (function () {
+      const cfg = window.MOBI_CONFIG || {};
+      const $ = (id) => document.getElementById(id);
+      const show = (id) => ["choose", "sent", "done"].forEach((s) => ($(s).hidden = s !== id));
+      const fail = (msg) => { $("error").textContent = msg; $("error").hidden = false; };
+
+      if (!cfg.supabaseUrl || !cfg.supabaseAnonKey || cfg.supabaseUrl.includes("YOUR-")) {
+        fail("Sign-in isn't set up yet. Check back soon.");
+        return;
+      }
+      const sb = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey, {
+        auth: { flowType: "pkce", detectSessionInUrl: true, persistSession: true },
+      });
+      const here = location.origin + location.pathname;
+
+      // The 13+ confirmation gates both sign-in buttons and travels to the app.
+      const age = $("age");
+      try { age.checked = localStorage.getItem("mobi.age_ok") === "1"; } catch (e) { /* fine */ }
+      const sync = () => {
+        $("google").disabled = $("email-btn").disabled = !age.checked;
+        try { localStorage.setItem("mobi.age_ok", age.checked ? "1" : "0"); } catch (e) { /* fine */ }
+      };
+      age.addEventListener("change", sync);
+      sync();
+
+      $("google").addEventListener("click", async () => {
+        const { error } = await sb.auth.signInWithOAuth({ provider: "google", options: { redirectTo: here } });
+        if (error) fail(error.message);
+      });
+
+      $("email-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const email = $("email").value.trim();
+        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return fail("Enter a valid email address.");
+        $("email-btn").disabled = true;
+        const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: here } });
+        $("email-btn").disabled = !age.checked;
+        if (error) return fail(error.message);
+        $("sent-to").textContent = email;
+        show("sent");
+      });
+      $("back").addEventListener("click", () => show("choose"));
+
+      // Signed in (back from Google or an email link): hand the session to the app.
+      function handOff(session) {
+        const meta = session.user.user_metadata || {};
+        const name = (meta.full_name || meta.name || session.user.email || "").split(" ")[0];
+        $("done-name").textContent = (name || "friend") + ".";
+        const ageOk = (() => { try { return localStorage.getItem("mobi.age_ok") === "1"; } catch (e) { return false; } })();
+        const link = "mobi://auth#" + new URLSearchParams({
+          access_token: session.access_token,
+          refresh_token: session.refresh_token,
+          expires_in: String(session.expires_in || 3600),
+          age: ageOk ? "1" : "0",
+        }).toString();
+        $("open-app").href = link;
+        show("done");
+        // Clear the code/tokens from the address bar, then open the app.
+        history.replaceState(null, "", here);
+        setTimeout(() => { location.href = link; }, 400);
+      }
+
+      sb.auth.onAuthStateChange((event, session) => {
+        if (session && (event === "SIGNED_IN" || event === "INITIAL_SESSION")) handOff(session);
+      });
+    })();
+  </script>
+</body>
+</html>
