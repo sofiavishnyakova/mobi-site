@@ -14,12 +14,6 @@
     "The slope of $f$ is its derivative $f'(x)$. Set it equal to zero and solve for $x$.",
     "You should get $f'(x) = 3x^2 - 3$. Solve $3x^2 - 3 = 0$. What do you divide both sides by?",
   ];
-  const WORK = [
-    { tex: "f'(x) = 3x^2 - 3", ok: true },
-    { tex: "3x^2 - 3 = 0", ok: true },
-    { tex: "x^2 = 3", ok: false },
-    { tex: "x = \\pm\\sqrt{3}", ok: true },
-  ];
   const SOLUTION = [
     { tex: "f'(x) = 3x^2 - 3", why: "Differentiate term by term with the power rule." },
     { tex: "3x^2 - 3 = 0", why: "Peaks and valleys happen where the slope is zero." },
@@ -46,20 +40,9 @@
     hintBtn.textContent = hints >= HINTS.length ? "No more hints" : "Next hint";
   });
 
+  // Checking real work needs the app (it reads your screen), so the demo points there.
   $("#m-check").addEventListener("click", () => {
     const card = $("#m-check-card");
-    const list = card.querySelector(".m-steps");
-    list.innerHTML = "";
-    WORK.forEach((w, i) => {
-      setTimeout(() => {
-        const li = document.createElement("li");
-        li.className = "m-step" + (w.ok ? "" : " wrong");
-        li.innerHTML = tex(w.tex, true) + `<div class="m-flag">${w.ok ? "✓ Checked by SymPy" : "SymPy disagrees with this step"}</div>`;
-        list.appendChild(li);
-        if (i === WORK.length - 1) card.querySelector(".m-note").hidden = false;
-      }, i * 350);
-    });
-    card.querySelector(".m-note").hidden = true;
     card.hidden = false;
     card.scrollIntoView({ behavior: "smooth", block: "nearest" });
   });

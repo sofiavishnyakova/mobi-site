@@ -84,3 +84,7 @@
   .mobi::before, .mobi .m-hints li, .mobi .m-step { animation: none; }
 }
 .mobi .katex { white-space: nowrap; }
+.mobi .m-link {
+  display: inline-block; text-decoration: none; color: #fff; background: var(--m-text); font-weight: 600;
+  border-radius: 999px; padding: 7px 14px;
+}
