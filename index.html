@@ -6,6 +6,8 @@
   <title>Mobi</title>
   <meta name="description" content="An AI STEM tutor that sits on your screen, gives hints instead of answers, and checks your work line by line." />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" />
+  <link rel="stylesheet" href="demo.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -312,6 +314,78 @@
     </div>
   </section>
 
+  <!-- ---------------- live demo ---------------- -->
+  <section id="demo">
+    <div class="wrap demo-grid">
+      <div class="demo-copy reveal">
+        <span class="mono">Live demo</span>
+        <h2>Try it on a <em class="accent">real problem.</em></h2>
+        <p>This is the Mobi panel, the same one that floats over your work. Here it has already captured a calculus problem.</p>
+        <ul class="demo-tips">
+          <li>Ask for hints one at a time, from a nudge to the next step.</li>
+          <li>Check a student's work. There's a slip hiding in it.</li>
+          <li>Drag the pink point along the curve. Where does the tangent go flat?</li>
+        </ul>
+      </div>
+
+      <div class="mobi reveal" id="mobi-demo" aria-label="Interactive demo of the Mobi panel">
+        <div class="m-bar">
+          <img class="m-mark" src="assets/logo-mark.png" alt="" />
+          <span class="m-title">Mobi</span>
+          <span class="m-dot"></span>
+          <span class="m-spacer"></span>
+          <span class="m-icon">History</span>
+          <span class="m-icon">Capture</span>
+        </div>
+        <div class="m-body">
+          <div class="m-card">
+            <div class="m-chips"><span class="m-chip">calculus</span><span class="m-chip">critical points</span></div>
+            <div class="m-problem">Find the local maximum and minimum of <span data-tex="f(x) = x^3 - 3x"></span>.</div>
+          </div>
+
+          <div class="m-card">
+            <h4>Hints</h4>
+            <p class="m-muted" id="m-hints-empty">Start with a nudge. You can always ask for more.</p>
+            <ol class="m-hints" id="m-hints"></ol>
+            <p class="m-small" id="m-nudge" hidden></p>
+            <div class="m-actions">
+              <button class="primary" id="m-hint">Get a hint</button>
+              <button id="m-check">Check my work</button>
+              <button id="m-solution">Show solution</button>
+            </div>
+            <div class="m-confirm" id="m-confirm" hidden>
+              You've used <span id="m-used">0</span> of 3 hints. Try one more first?
+              <div class="m-actions">
+                <button id="m-one-more">One more hint</button>
+                <button id="m-show-anyway">Show the solution</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="m-card warn" id="m-check-card" hidden>
+            <h4>Take another look</h4>
+            <ol class="m-steps"></ol>
+            <div class="m-note" hidden>Look at line 3. You started from <span data-tex="3x^2 - 3 = 0"></span>. If you add 3 to both sides first, what's left before you divide?</div>
+            <div class="m-small">Verified with SymPy</div>
+          </div>
+
+          <div class="m-card" id="m-solution-card" hidden>
+            <h4>Worked solution</h4>
+            <ol class="m-steps"></ol>
+          </div>
+
+          <div class="m-card">
+            <h4>Play with it</h4>
+            <div class="m-problem" data-tex="f(x) = x^3 - 3x"></div>
+            <svg class="m-graph" viewBox="0 0 400 240" role="img" aria-label="Graph of f(x) = x cubed minus 3x with a draggable tangent point"></svg>
+            <div class="m-readout" id="m-readout"></div>
+            <div class="m-hint">Drag the pink point along the curve. Where does the tangent go flat? <strong id="m-flat" hidden>Slope is 0 here: a candidate max or min.</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ---------------- features ---------------- -->
   <section id="features">
     <div class="wrap">
@@ -478,5 +552,7 @@
     }, { threshold: 0.15 });
     document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
+  <script src="demo.js"></script>
 </body>
 </html>

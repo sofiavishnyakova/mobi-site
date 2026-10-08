@@ -1,0 +1,86 @@
+/* Interactive demo: a faithful copy of the Mobi panel (same tokens as the app's light theme). */
+.demo-grid { display: grid; grid-template-columns: 1fr 440px; gap: 64px; align-items: start; }
+.demo-copy { position: sticky; top: 48px; }
+.demo-copy h2 { font-size: clamp(30px, 3.6vw, 44px); font-weight: 500; letter-spacing: -0.03em; line-height: 1.1; margin: 14px 0 18px; }
+.demo-copy p { color: var(--ink-soft); font-size: 18px; margin: 0 0 22px; }
+.demo-tips { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; color: var(--ink-soft); }
+.demo-tips li { display: flex; gap: 12px; }
+.demo-tips li::before { content: "◇"; color: var(--pink); }
+
+.mobi {
+  --m-bg: #f6f4f5; --m-surface: rgba(255,255,255,0.62); --m-solid: #fff; --m-text: #15172a; --m-muted: #5d6074;
+  --m-faint: #8d8fa0; --m-border: rgba(21,23,42,0.1); --m-border-strong: rgba(21,23,42,0.22);
+  --m-teal: #3cc3d1; --m-blue: #6f8ff0; --m-pink: #ef6fae; --m-orange: #ffa45c;
+  --m-ok: #1d8a93; --m-ok-bg: rgba(60,195,209,0.13); --m-danger: #c23b74; --m-danger-bg: rgba(239,111,174,0.13);
+  --m-warn: #9a5a12; --m-warn-bg: rgba(255,164,92,0.14);
+  --m-gradient: linear-gradient(120deg, var(--m-teal), var(--m-blue) 35%, var(--m-pink) 68%, var(--m-orange));
+  position: relative; isolation: isolate; overflow: hidden; overflow: clip;
+  width: 100%; max-width: 440px; border-radius: 18px; border: 1px solid var(--m-border-strong);
+  background: var(--m-bg); color: var(--m-text); font-family: var(--sans); font-size: 14px; line-height: 1.55;
+  box-shadow: 0 30px 70px -40px rgba(21,23,42,0.45), 0 10px 30px -20px rgba(239,111,174,0.35);
+}
+.mobi::before {
+  content: ""; position: absolute; width: 340px; height: 340px; right: -150px; top: -170px; border-radius: 50%;
+  background: conic-gradient(from 200deg, var(--m-teal), var(--m-blue), var(--m-pink), var(--m-orange), #ffd98f, var(--m-teal));
+  filter: blur(60px); opacity: 0.45; z-index: -1; animation: turn 40s linear infinite;
+}
+.mobi .m-bar { display: flex; align-items: center; gap: 8px; padding: 12px 14px; border-bottom: 1px solid var(--m-border); }
+.mobi .m-mark { width: 28px; height: 28px; margin: -3px -2px -3px -4px; }
+.mobi .m-title { font-weight: 600; letter-spacing: -0.01em; }
+.mobi .m-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--m-teal); box-shadow: 0 0 0 3px var(--m-ok-bg); }
+.mobi .m-spacer { flex: 1; }
+.mobi .m-icon { color: var(--m-muted); font-size: 13px; padding: 3px 10px; border-radius: 999px; cursor: default; }
+.mobi .m-body { padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+.mobi .m-card { position: relative; background: var(--m-surface); border: 1px solid var(--m-border); border-radius: 14px; padding: 14px; backdrop-filter: blur(10px); }
+.mobi .m-card.warn { border-color: rgba(255,164,92,0.6); }
+.mobi h4 { font-family: var(--mono); font-size: 10.5px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--m-faint); margin: 0 0 10px; }
+.mobi .m-chips { display: flex; gap: 6px; margin-bottom: 10px; }
+.mobi .m-chip { font-size: 12px; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--m-border-strong); background: var(--m-surface); }
+.mobi .m-problem { font-size: 15px; line-height: 1.65; }
+.mobi .m-hints { list-style: none; margin: 0; padding: 0; }
+.mobi .m-hints li { display: flex; gap: 12px; padding: 10px 0; border-top: 1px solid var(--m-border); animation: m-in 0.45s ease-out; }
+.mobi .m-hints li:first-child { border-top: none; padding-top: 2px; }
+.mobi .m-rung {
+  flex: none; width: 24px; height: 24px; border-radius: 50%; font-family: var(--mono); font-size: 11px;
+  display: flex; align-items: center; justify-content: center; border: 1px solid transparent;
+  background: linear-gradient(var(--m-bg), var(--m-bg)) padding-box, var(--m-gradient) border-box;
+}
+.mobi .m-muted { color: var(--m-muted); margin: 0; }
+.mobi .m-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.mobi button {
+  font: inherit; color: var(--m-text); border: 1px solid var(--m-border-strong); background: var(--m-surface);
+  border-radius: 999px; padding: 7px 14px; cursor: pointer; white-space: nowrap; transition: background 0.15s, transform 0.15s;
+}
+.mobi button:hover { background: var(--m-solid); }
+.mobi button.primary {
+  background: var(--m-text); border-color: var(--m-text); color: #fff; font-weight: 600;
+  box-shadow: 0 8px 22px -12px rgba(239,111,174,0.7), 0 6px 18px -12px rgba(60,195,209,0.7);
+}
+.mobi button.primary:hover { transform: translateY(-1px); background: var(--m-text); }
+.mobi .m-confirm { margin-top: 10px; padding: 12px; border-radius: 12px; background: var(--m-warn-bg); color: var(--m-warn); }
+.mobi .m-steps { list-style: none; margin: 0; padding: 0; }
+.mobi .m-step { border-left: 1px solid var(--m-border-strong); padding: 2px 0 2px 10px; margin: 6px 0; animation: m-in 0.5s ease-out; }
+.mobi .m-step.wrong { border-left: 2px solid var(--m-danger); }
+.mobi .m-step .katex-display { margin: 4px 0; }
+.mobi .m-flag { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.05em; color: var(--m-ok); }
+.mobi .m-step.wrong .m-flag { color: var(--m-danger); }
+.mobi .m-why { font-size: 12.5px; color: var(--m-muted); }
+.mobi .m-note { margin-top: 10px; padding: 12px; border-radius: 12px; background: var(--m-surface); border: 1px solid var(--m-border); }
+.mobi .m-small { font-size: 12px; color: var(--m-muted); margin-top: 8px; }
+.mobi svg.m-graph { width: 100%; height: auto; display: block; border: 1px solid var(--m-border); border-radius: 12px; background: var(--m-solid); touch-action: none; cursor: grab; }
+.mobi svg.m-graph:active { cursor: grabbing; }
+.mobi .m-readout { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 10px; font-size: 13px; }
+.mobi .m-readout .flat { color: var(--m-pink); }
+.mobi .m-hint { font-size: 13px; color: var(--m-muted); margin-top: 8px; }
+.mobi .m-hint strong { color: var(--m-pink); font-weight: 600; }
+@keyframes m-in { from { opacity: 0; transform: translateY(-6px); } }
+
+@media (max-width: 900px) {
+  .demo-grid { grid-template-columns: 1fr; gap: 36px; }
+  .demo-copy { position: static; }
+  .mobi { justify-self: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mobi::before, .mobi .m-hints li, .mobi .m-step { animation: none; }
+}
+.mobi .katex { white-space: nowrap; }
