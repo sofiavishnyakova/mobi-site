@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mobi</title>
-  <meta name="description" content="An AI STEM tutor that sits on your screen, gives hints instead of answers, and checks your work line by line." />
+  <meta name="description" content="Mobi is an AI study assistant for math, physics, chemistry and engineering. It sits on your screen, gives hints instead of answers, and checks your work line by line." />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" />
   <link rel="stylesheet" href="demo.css" />
@@ -246,11 +246,11 @@
     <header class="hero">
       <div>
         <div class="mono">Mobi · Beta 0.1 · for macOS</div>
-        <h1>Stuck on a problem? Get a <em class="accent">nudge,</em> not the answer.</h1>
+        <h1>AI that makes you <em class="accent">smarter,</em> not lazier.</h1>
         <p class="lede">
-          Mobi floats over whatever you're working on, whether that's homework, a PDF or a lecture video.
-          Capture a problem with one shortcut and it walks you through it: hints first, your work checked line by line,
-          and every step verified by real math.
+          Mobi is an AI study assistant for STEM: math, physics, chemistry and engineering. It floats over whatever
+          you're working on, whether that's homework, a PDF or a lecture video. Capture a problem with one shortcut and
+          it walks you through it: hints first, your work checked line by line, and every step verified by real math.
         </p>
         <div class="cta-row">
           <a class="btn btn-primary" href="#download">
@@ -324,7 +324,8 @@
         <ul class="demo-tips">
           <li>Ask for hints one at a time, from a nudge to the next step.</li>
           <li>Watch a worked solution build step by step.</li>
-          <li>Drag the pink point along the curve. Where does the tangent go flat?</li>
+          <li>Slide in more rectangles and watch them close in on the exact area.</li>
+          <li>Ask Mobi a question about the problem.</li>
         </ul>
       </div>
 
@@ -339,8 +340,8 @@
         </div>
         <div class="m-body">
           <div class="m-card">
-            <div class="m-chips"><span class="m-chip">calculus</span><span class="m-chip">critical points</span></div>
-            <div class="m-problem">Find the local maximum and minimum of <span data-tex="f(x) = x^3 - 3x"></span>.</div>
+            <div class="m-chips"><span class="m-chip">calculus</span><span class="m-chip">definite integrals</span></div>
+            <div class="m-problem">Find the area under <span data-tex="f(x) = x^2"></span> from <span data-tex="x = 0"></span> to <span data-tex="x = 2"></span>.</div>
           </div>
 
           <div class="m-card">
@@ -375,10 +376,25 @@
 
           <div class="m-card">
             <h4>Play with it</h4>
-            <div class="m-problem" data-tex="f(x) = x^3 - 3x"></div>
-            <svg class="m-graph" viewBox="0 0 400 240" role="img" aria-label="Graph of f(x) = x cubed minus 3x with a draggable tangent point"></svg>
+            <div class="m-problem" data-tex="f(x) = x^2"></div>
+            <svg class="m-graph" viewBox="0 0 400 240" role="img" aria-label="Area under x squared from 0 to 2, filled with rectangles"></svg>
+            <label class="m-slider"><span data-tex="n"></span><input type="range" id="m-n" min="1" max="40" step="1" value="4" aria-label="Number of rectangles" /><span class="m-n-val" id="m-n-val">4</span></label>
             <div class="m-readout" id="m-readout"></div>
-            <div class="m-hint">Drag the pink point along the curve. Where does the tangent go flat? <strong id="m-flat" hidden>Slope is 0 here: a candidate max or min.</strong></div>
+            <div class="m-hint">Slide <span data-tex="n"></span> up and watch the rectangles close the gap. That limit is the integral.</div>
+          </div>
+
+          <div class="m-card">
+            <h4>Ask about this</h4>
+            <div class="m-chat" id="m-chat"></div>
+            <div class="m-suggest" id="m-suggest">
+              <button>Why does the integral give the area?</button>
+              <button>Why do we divide by 3?</button>
+              <button>What does dx mean?</button>
+            </div>
+            <form class="m-ask" id="m-ask">
+              <input id="m-q" placeholder="Ask a question about this problem" aria-label="Your question" maxlength="200" />
+              <button type="submit">Ask</button>
+            </form>
           </div>
         </div>
       </div>

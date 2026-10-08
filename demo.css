@@ -88,3 +88,23 @@
   display: inline-block; text-decoration: none; color: #fff; background: var(--m-text); font-weight: 600;
   border-radius: 999px; padding: 7px 14px;
 }
+.mobi .m-slider { display: flex; align-items: center; gap: 10px; margin-top: 10px; font-size: 13px; }
+.mobi .m-slider input { flex: 1; accent-color: var(--m-pink); }
+.mobi .m-n-val { min-width: 24px; text-align: right; font-family: var(--mono); font-size: 12px; }
+.mobi .m-chat { display: flex; flex-direction: column; gap: 8px; }
+.mobi .m-msg { padding: 9px 12px; border-radius: 14px; line-height: 1.55; animation: m-in 0.4s ease-out; }
+.mobi .m-msg.user {
+  align-self: flex-end; max-width: 85%; border: 1px solid transparent;
+  background: linear-gradient(var(--m-solid), var(--m-solid)) padding-box, var(--m-gradient) border-box;
+}
+.mobi .m-msg.assistant { background: var(--m-surface); border: 1px solid var(--m-border); }
+.mobi .m-msg.thinking { color: var(--m-faint); font-family: var(--mono); font-size: 11.5px; }
+.mobi .m-msg a { color: #4b63c9; }
+.mobi .m-suggest { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 0; }
+.mobi .m-suggest button { font-size: 12.5px; padding: 5px 12px; white-space: normal; text-align: left; }
+.mobi .m-ask { display: flex; gap: 6px; margin-top: 10px; }
+.mobi .m-ask input {
+  flex: 1; min-width: 0; font: inherit; border: 1px solid var(--m-border-strong); border-radius: 999px;
+  padding: 7px 14px; background: var(--m-surface); outline: none; color: var(--m-text);
+}
+.mobi .m-ask input:focus { border-color: var(--m-blue); box-shadow: 0 0 0 3px rgba(111,143,240,0.15); }
