@@ -91,6 +91,11 @@
     .btn-ghost { color: var(--ink); border: 1px solid var(--line-strong); }
     .btn-ghost:hover { background: var(--card); }
     .fine { margin-top: 16px; font-size: 13px; color: var(--ink-faint); }
+    .how-link { font-size: 15px; font-weight: 500; color: var(--ink-soft); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--line-strong); }
+    .how-link:hover { color: var(--ink); text-decoration-color: var(--pink); }
+    .download-card .how-link { color: rgba(255,255,255,0.8); text-decoration-color: rgba(255,255,255,0.35); }
+    .download-card .how-link:hover { color: #fff; text-decoration-color: #fff; }
+    .download-card .dl-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px; margin-bottom: 20px; }
 
     .visual { position: relative; aspect-ratio: 1; width: 100%; max-width: 560px; justify-self: end; }
     .orb {
@@ -258,6 +263,7 @@
             Download for Mac
           </a>
           <a class="btn btn-ghost" href="#how">See how it works</a>
+          <a class="how-link" href="install.html">Instructions to download</a>
         </div>
         <div class="fine">Free during beta · Apple Silicon &amp; Intel</div>
       </div>
@@ -366,7 +372,7 @@
           <div class="m-card" id="m-check-card" hidden>
             <h4>Check my work</h4>
             <p class="m-muted">You can only check your work in the app itself.</p>
-            <div class="m-actions"><a class="m-link" href="#download">Download Mobi</a></div>
+            <div class="m-actions"><a class="m-link" href="#download">Download Mobi</a> <a class="m-how" href="install.html">Instructions to download</a></div>
           </div>
 
           <div class="m-card" id="m-solution-card" hidden>
@@ -490,10 +496,13 @@
         <span class="mono">Beta 0.1 · macOS · Apple Silicon &amp; Intel</span>
         <h3>Get Mobi</h3>
         <p>Free while in beta. Download it, open it, and create your account right in the app.</p>
-        <a class="btn" href="https://github.com/sofiavishnyakova/mobi-site/releases/latest/download/Mobi-mac.dmg">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14"/></svg>
-          Download for Mac · 8 MB
-        </a>
+        <div class="dl-row">
+          <a class="btn" href="https://github.com/sofiavishnyakova/mobi-site/releases/latest/download/Mobi-mac.dmg">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14"/></svg>
+            Download for Mac · 8 MB
+          </a>
+          <a class="how-link" href="install.html">Instructions to download</a>
+        </div>
         <p class="tiny">For students 13 and older. Press <kbd>⌥ Space</kbd> anytime to show or hide Mobi.</p>
       </div>
     </div>

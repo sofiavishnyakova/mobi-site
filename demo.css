@@ -108,3 +108,6 @@
   padding: 7px 14px; background: var(--m-surface); outline: none; color: var(--m-text);
 }
 .mobi .m-ask input:focus { border-color: var(--m-blue); box-shadow: 0 0 0 3px rgba(111,143,240,0.15); }
+.mobi .m-actions { align-items: center; }
+.mobi .m-how { font-size: 13px; color: var(--m-muted); text-underline-offset: 3px; }
+.mobi .m-how:hover { color: var(--m-text); }
