@@ -206,6 +206,28 @@
     .code-box code { font-family: var(--mono); font-size: 20px; letter-spacing: 0.08em; color: #fff; }
     .copy { font: inherit; font-size: 13px; color: #fff; background: transparent; border: 1px solid rgba(255,255,255,0.35); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
     .download-card kbd { background: rgba(255,255,255,.12); color: #fff; border-color: rgba(255,255,255,.3); }
+    /* ---------- contact ---------- */
+    .contact { display: grid; grid-template-columns: 1fr 1.25fr; gap: 60px; align-items: start; }
+    .contact h2 { font-size: clamp(30px,3.6vw,44px); font-weight: 500; letter-spacing: -0.03em; line-height: 1.1; margin: 14px 0 18px; }
+    .contact-copy p { color: var(--ink-soft); margin: 0 0 14px; max-width: 420px; }
+    .contact-form {
+      display: grid; gap: 16px; padding: 36px; border-radius: 26px; border: 1px solid var(--line); background: var(--card);
+      backdrop-filter: blur(10px);
+    }
+    .contact-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .cf { display: grid; gap: 6px; font-size: 13px; color: var(--ink-soft); }
+    .cf input, .cf select, .cf textarea {
+      font: inherit; font-size: 16px; color: var(--ink); padding: 12px 16px; border-radius: 14px;
+      border: 1px solid var(--line-strong); background: rgba(255,255,255,0.7); outline: none; width: 100%;
+    }
+    .cf textarea { min-height: 140px; resize: vertical; line-height: 1.5; }
+    .cf input:focus, .cf select:focus, .cf textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(111,143,240,.15); }
+    .contact-form .btn { justify-self: start; border: 0; cursor: pointer; font-family: inherit; }
+    .contact-form .btn[disabled] { opacity: 0.55; cursor: default; }
+    .cf-status { font-size: 14px; margin: 0; }
+    .cf-status.err { color: #c23b74; }
+    .cf-status.ok { color: #1d8a93; }
+    .cf-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
     footer { padding: 50px 0 60px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; color: var(--ink-faint); font-size: 14px; }
 
     .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.8s ease, transform 0.8s ease; }
@@ -218,6 +240,8 @@
       .step, .step + .step { padding: 28px 0; border-right: 0; border-bottom: 1px solid var(--line); }
       .features, .levels, .install { grid-template-columns: 1fr; }
       .privacy { grid-template-columns: 1fr; padding: 30px; }
+      .contact, .contact-row { grid-template-columns: 1fr; }
+      .contact-form { padding: 24px; }
       .rung { grid-template-columns: 1fr; gap: 10px; }
       .nav-links a:not(.pill) { display: none; }
       section { padding: 64px 0; }
@@ -243,6 +267,7 @@
         <a href="#how">How it works</a>
         <a href="#features">Features</a>
         <a href="#privacy">Privacy</a>
+        <a href="#contact">Contact</a>
         <a class="pill" href="#download">Download</a>
       </div>
     </nav>
@@ -508,6 +533,37 @@
     </div>
   </section>
 
+  <section id="contact">
+    <div class="wrap contact">
+      <div class="contact-copy reveal">
+        <span class="mono">06 · Contact</span>
+        <h2>Tell us what you <em class="accent">think.</em></h2>
+        <p>Found a bug, have an idea, or want Mobi for your class or school? Send a message. It goes straight to Sofia, who builds Mobi, and she reads every one.</p>
+        <p>Reporting a bug? Tell us the problem you tried, what you expected, and what Mobi did.</p>
+      </div>
+      <form class="contact-form reveal" id="contact-form" novalidate>
+        <div class="contact-row">
+          <label class="cf">Name<input name="name" autocomplete="name" maxlength="80" required /></label>
+          <label class="cf">Email<input name="email" type="email" autocomplete="email" maxlength="200" placeholder="So we can reply" required /></label>
+        </div>
+        <label class="cf">What's it about?
+          <select name="topic">
+            <option>Feedback</option>
+            <option>Bug report</option>
+            <option>Question</option>
+            <option>School or partnership</option>
+            <option>Other</option>
+          </select>
+        </label>
+        <label class="cf">Message<textarea name="message" maxlength="4000" required></textarea></label>
+        <label class="cf-hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
+        <button class="btn btn-primary" type="submit" id="cf-send">Send message</button>
+        <p class="cf-status" id="cf-status" role="status" hidden></p>
+        <p class="fine" style="margin:0;">We only use your name and email to reply to you. Never sold, never shared.</p>
+      </form>
+    </div>
+  </section>
+
   <div class="wrap">
     <hr class="rule" />
     <footer>
@@ -569,6 +625,38 @@
       requestAnimationFrame(frame);
     })();
 
+
+    // Contact form: sends to Mobi's own server, which stores the message for Sofia.
+    (function () {
+      const form = document.getElementById("contact-form");
+      const status = document.getElementById("cf-status");
+      const send = document.getElementById("cf-send");
+      const show = (msg, ok) => { status.textContent = msg; status.className = "cf-status " + (ok ? "ok" : "err"); status.hidden = false; };
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const d = Object.fromEntries(new FormData(form));
+        if (!d.name.trim()) return show("Please enter your name.");
+        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email.trim())) return show("Please enter a valid email so we can reply.");
+        if (d.message.trim().length < 5) return show("Please write a message.");
+        send.disabled = true; send.textContent = "Sending…"; status.hidden = true;
+        try {
+          const r = await fetch("https://study-tutor-api-sofia.fly.dev/feedback", {
+            method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name: d.name, email: d.email, topic: d.topic, message: d.message, website: d.website || "" }),
+          });
+          if (!r.ok) {
+            const body = await r.json().catch(() => ({}));
+            throw new Error(typeof body.detail === "string" ? body.detail : "");
+          }
+          form.reset();
+          show("Thank you! Your message was sent. We'll reply by email.", true);
+        } catch (err) {
+          show(err.message || "Something went wrong. Please try again in a moment.");
+        } finally {
+          send.disabled = false; send.textContent = "Send message";
+        }
+      });
+    })();
 
     // Fade sections in as they scroll into view.
     const io = new IntersectionObserver((entries) => {
