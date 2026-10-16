@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mobi for Windows · Waitlist</title>
+  <meta name="description" content="Mobi is coming to Windows. Join the waitlist and we'll email you when it's ready." />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f6f4f5; --ink: #15172a; --soft: #55586b; --faint: #8d8fa0;
+      --line: rgba(21, 23, 42, 0.12); --line-strong: rgba(21, 23, 42, 0.26);
+      --teal: #57d2df; --blue: #6f8ff0; --pink: #ef6fae; --orange: #ffa45c; --sun: #ffd98f;
+      --sans: "Manrope", system-ui, -apple-system, sans-serif;
+      --serif: "Instrument Serif", Georgia, serif;
+      --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body {
+      margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px;
+      background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.55;
+      -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    }
+    body::before {
+      content: ""; position: fixed; width: 620px; height: 620px; border-radius: 50%; right: -220px; top: -260px;
+      background: conic-gradient(from 210deg, var(--teal), var(--blue), var(--pink), var(--orange), var(--sun), var(--teal));
+      filter: blur(70px); opacity: 0.45; z-index: -1;
+    }
+    .card {
+      width: 100%; max-width: 480px; padding: 36px 32px 28px; border-radius: 26px;
+      background: rgba(255, 255, 255, 0.62); border: 1px solid var(--line); backdrop-filter: blur(14px);
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; text-decoration: none; color: inherit; margin-bottom: 26px; }
+    .brand svg { width: 20px; height: 20px; }
+    .mono { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); }
+    h1 { font-size: 32px; font-weight: 500; letter-spacing: -0.03em; line-height: 1.1; margin: 10px 0 10px; }
+    h1 em { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 1.1em; }
+    p { color: var(--soft); margin: 0 0 18px; }
+    label.field { display: grid; gap: 6px; font-size: 13px; color: var(--soft); margin-bottom: 18px; }
+    input[type=email], input[type=text] {
+      width: 100%; font: inherit; font-size: 16px; padding: 12px 16px; border-radius: 14px; color: var(--ink);
+      border: 1px solid var(--line-strong); background: rgba(255,255,255,0.8); outline: none;
+    }
+    input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(111,143,240,.15); }
+    fieldset { border: 0; margin: 0 0 18px; padding: 0; }
+    legend { font-size: 13px; color: var(--soft); margin-bottom: 10px; padding: 0; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chips label { cursor: pointer; }
+    .chips input { position: absolute; opacity: 0; pointer-events: none; }
+    .chips span {
+      display: inline-block; padding: 8px 14px; border-radius: 999px; font-size: 14px;
+      border: 1px solid var(--line-strong); background: rgba(255,255,255,0.7); transition: background .15s, border-color .15s;
+    }
+    .chips input:checked + span { background: var(--ink); color: #fff; border-color: var(--ink); }
+    .chips input:focus-visible + span { box-shadow: 0 0 0 3px rgba(111,143,240,.3); }
+    #other-text { margin-top: 10px; }
+    .btn {
+      width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 13px 18px; border-radius: 999px; font: inherit; font-weight: 600; cursor: pointer;
+      border: 1px solid var(--ink); background: var(--ink); color: #fff; text-decoration: none;
+      box-shadow: 0 10px 26px -12px rgba(239,111,174,.6), 0 6px 18px -12px rgba(87,210,223,.7);
+      transition: transform 0.15s ease;
+    }
+    .btn:hover:not([disabled]) { transform: translateY(-1px); }
+    .btn[disabled] { opacity: 0.55; cursor: default; }
+    .btn.ghost { background: #fff; color: var(--ink); border-color: var(--line-strong); box-shadow: none; margin-top: 10px; }
+    .error { color: #c23b74; font-size: 14px; margin: 12px 0 0; }
+    .note { font-size: 13px; color: var(--faint); margin: 16px 0 0; }
+    .note a { color: inherit; }
+    .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <a class="brand" href="./">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#57d2df"/><stop offset=".5" stop-color="#ef6fae"/><stop offset="1" stop-color="#ffa45c"/></linearGradient></defs><path d="M12 1 C12.6 8.6 15.4 11.4 23 12 C15.4 12.6 12.6 15.4 12 23 C11.4 15.4 8.6 12.6 1 12 C8.6 11.4 11.4 8.6 12 1Z" fill="url(#g)"/></svg>
+      Mobi
+    </a>
+
+    <section id="join">
+      <span class="mono">Windows waitlist</span>
+      <h1>Mobi is coming to <em>Windows.</em></h1>
+      <p>Leave your email and we'll let you know the moment it's ready. You'll be one of the first to try it.</p>
+      <form id="waitlist" novalidate>
+        <label class="field">Email
+          <input type="email" name="email" autocomplete="email" placeholder="you@school.edu" maxlength="200" required />
+        </label>
+        <fieldset>
+          <legend>Which AI do you use when you study? Pick all that apply.</legend>
+          <div class="chips">
+            <label><input type="checkbox" name="ai" value="ChatGPT" /><span>ChatGPT</span></label>
+            <label><input type="checkbox" name="ai" value="Gemini" /><span>Gemini</span></label>
+            <label><input type="checkbox" name="ai" value="Claude" /><span>Claude</span></label>
+            <label><input type="checkbox" name="ai" value="Photomath" /><span>Photomath</span></label>
+            <label><input type="checkbox" name="ai" value="Gauth" /><span>Gauth</span></label>
+            <label><input type="checkbox" name="ai" value="Khanmigo" /><span>Khanmigo</span></label>
+            <label><input type="checkbox" name="ai" value="Perplexity" /><span>Perplexity</span></label>
+            <label><input type="checkbox" name="ai" value="Copilot" /><span>Copilot</span></label>
+            <label><input type="checkbox" name="ai" value="None" id="ai-none" /><span>None</span></label>
+            <label><input type="checkbox" name="ai" value="Other" id="ai-other" /><span>Other</span></label>
+          </div>
+          <input type="text" id="other-text" maxlength="60" placeholder="Which one?" aria-label="Other AI you use" hidden />
+        </fieldset>
+        <label class="hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
+        <button class="btn" type="submit" id="send">Join the waitlist</button>
+        <p class="error" id="error" role="alert" hidden></p>
+      </form>
+      <p class="note">We'll only email you about Mobi for Windows. Never sold, never shared.</p>
+    </section>
+
+    <section id="done" hidden>
+      <span class="mono">You're on the list</span>
+      <h1>Thank you, <em>see you soon.</em></h1>
+      <p>We'll email you as soon as Mobi for Windows is ready. Got a Mac too? You can use Mobi there today.</p>
+      <a class="btn" href="./#download">Get Mobi for Mac</a>
+      <a class="btn ghost" href="./">Back to mobitutor.online</a>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      const $ = (id) => document.getElementById(id);
+      const form = $("waitlist");
+      const fail = (msg) => { $("error").textContent = msg; $("error").hidden = false; };
+      const boxes = [...form.querySelectorAll('input[name="ai"]')];
+
+      // "None" and the AI names exclude each other; "Other" reveals a text box.
+      boxes.forEach((b) => b.addEventListener("change", () => {
+        if (b.checked && b.id === "ai-none") boxes.forEach((o) => { if (o !== b) o.checked = false; });
+        if (b.checked && b.id !== "ai-none") $("ai-none").checked = false;
+        $("other-text").hidden = !$("ai-other").checked;
+        if (!$("other-text").hidden && b.id === "ai-other") $("other-text").focus();
+      }));
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        $("error").hidden = true;
+        const email = form.email.value.trim();
+        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return fail("Please enter a valid email address.");
+        const tools = boxes.filter((b) => b.checked).map((b) =>
+          b.id === "ai-other" ? (($("other-text").value.trim() && `Other: ${$("other-text").value.trim()}`) || "Other") : b.value);
+        const send = $("send");
+        send.disabled = true; send.textContent = "Joining…";
+        try {
+          const r = await fetch("https://study-tutor-api-sofia.fly.dev/waitlist", {
+            method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, ai_tools: tools, website: form.website.value }),
+          });
+          if (!r.ok) {
+            const body = await r.json().catch(() => ({}));
+            throw new Error(typeof body.detail === "string" ? body.detail : "");
+          }
+          $("join").hidden = true;
+          $("done").hidden = false;
+        } catch (err) {
+          fail(err.message || "Something went wrong. Please try again in a moment.");
+          send.disabled = false; send.textContent = "Join the waitlist";
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
