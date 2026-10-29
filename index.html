@@ -232,6 +232,50 @@
     .cf-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
     footer { padding: 50px 0 60px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; color: var(--ink-faint); font-size: 14px; }
 
+
+    /* ---------- Mobi 2 ---------- */
+    .v2 { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 48px; align-items: center; }
+    .v2-badge { display: inline-flex; align-items: center; gap: 8px; }
+    .v2-badge i { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, var(--teal), var(--pink), var(--orange)); }
+    .v2 h2 { font-size: clamp(30px, 3.6vw, 44px); font-weight: 500; letter-spacing: -0.03em; line-height: 1.1; margin: 14px 0 16px; }
+    .v2 .v2-lede { color: var(--ink-soft); margin: 0 0 22px; }
+    .v2 ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+    .v2 li { position: relative; padding-left: 22px; color: var(--ink-soft); font-size: 16px; }
+    .v2 li::before { content: ""; position: absolute; left: 0; top: 9px; width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, var(--teal), var(--blue), var(--pink)); }
+    .v2 li strong { color: var(--ink); font-weight: 600; }
+    .v2-shot { position: relative; border-radius: 20px; box-shadow: 0 30px 60px -30px rgba(21,23,42,.55), 0 18px 40px -24px rgba(239,111,174,.45); }
+    .v2-shot svg { display: block; width: 100%; height: auto; border-radius: 20px; }
+    .v2-shot .w { clip-path: inset(0 100% 0 0); animation: 16s linear infinite; }
+    .v2-shot .c1 { animation-name: v2c1; } .v2-shot .c2 { animation-name: v2c2; }
+    .v2-shot .ask { opacity: 0; animation: v2ask 16s ease infinite; }
+    .v2-shot .ring { stroke-dasharray: 120; stroke-dashoffset: 120; animation: v2ring 16s ease infinite; }
+    .v2-shot .arrow { stroke-dasharray: 320; stroke-dashoffset: 320; animation: v2arrow 16s ease infinite; }
+    .v2-shot .arrowhead { opacity: 0; animation: v2head 16s ease infinite; }
+    .v2-shot .n1 { animation-name: v2n1; } .v2-shot .n2 { animation-name: v2n2; } .v2-shot .n3 { animation-name: v2n3; }
+    .v2-shot .axes { opacity: 0; animation: v2axes 16s ease infinite; }
+    .v2-shot .curve { stroke-dasharray: 420; stroke-dashoffset: 420; animation: v2curve 16s ease infinite; }
+    .v2-shot .mem { opacity: 0; transform-box: fill-box; transform-origin: center; animation: v2mem 16s ease infinite; }
+    .v2-shot .bar { transform-box: fill-box; transform-origin: center; animation: v2bar 0.9s ease-in-out infinite alternate; }
+    .v2-shot .bar:nth-of-type(2) { animation-delay: .15s; } .v2-shot .bar:nth-of-type(3) { animation-delay: .3s; } .v2-shot .bar:nth-of-type(4) { animation-delay: .45s; }
+    /* Wait until the graphic scrolls into view, so it always starts from an empty board. */
+    .v2-shot:not(.in) * { animation-play-state: paused; }
+    @keyframes v2c1 { 0%, 2% { clip-path: inset(0 100% 0 0); opacity: 1; } 10%, 93% { clip-path: inset(0 0 0 0); opacity: 1; } 100% { clip-path: inset(0 0 0 0); opacity: 0; } }
+    @keyframes v2c2 { 0%, 11% { clip-path: inset(0 100% 0 0); opacity: 1; } 19%, 93% { clip-path: inset(0 0 0 0); opacity: 1; } 100% { clip-path: inset(0 0 0 0); opacity: 0; } }
+    @keyframes v2ask { 0%, 21% { opacity: 0; } 24%, 93% { opacity: 1; } 100% { opacity: 0; } }
+    @keyframes v2ring { 0%, 26% { stroke-dashoffset: 120; opacity: 1; } 30%, 93% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 0; } }
+    @keyframes v2arrow { 0%, 29% { stroke-dashoffset: 320; opacity: 1; } 34%, 93% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 0; } }
+    @keyframes v2head { 0%, 33% { opacity: 0; } 34%, 93% { opacity: 1; } 100% { opacity: 0; } }
+    @keyframes v2n1 { 0%, 35% { clip-path: inset(0 100% 0 0); opacity: 1; } 41%, 93% { clip-path: inset(0 0 0 0); opacity: 1; } 100% { clip-path: inset(0 0 0 0); opacity: 0; } }
+    @keyframes v2n2 { 0%, 43% { clip-path: inset(0 100% 0 0); opacity: 1; } 49%, 93% { clip-path: inset(0 0 0 0); opacity: 1; } 100% { clip-path: inset(0 0 0 0); opacity: 0; } }
+    @keyframes v2n3 { 0%, 51% { clip-path: inset(0 100% 0 0); opacity: 1; } 58%, 93% { clip-path: inset(0 0 0 0); opacity: 1; } 100% { clip-path: inset(0 0 0 0); opacity: 0; } }
+    @keyframes v2axes { 0%, 61% { opacity: 0; } 63%, 93% { opacity: 1; } 100% { opacity: 0; } }
+    @keyframes v2curve { 0%, 62% { stroke-dashoffset: 420; opacity: 1; } 71%, 93% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 0; } }
+    @keyframes v2mem { 0%, 76% { opacity: 0; transform: translateY(10px) scale(.96); } 80%, 93% { opacity: 1; transform: none; } 100% { opacity: 0; transform: none; } }
+    @keyframes v2bar { from { transform: scaleY(.35); } to { transform: scaleY(1); } }
+    @media (max-width: 900px) { .v2 { grid-template-columns: 1fr; gap: 32px; } }
+    @media (prefers-reduced-motion: reduce) {
+      .v2-shot .w, .v2-shot .ask, .v2-shot .ring, .v2-shot .arrow, .v2-shot .arrowhead, .v2-shot .axes, .v2-shot .curve, .v2-shot .mem, .v2-shot .bar { animation: none; opacity: 1; clip-path: none; stroke-dashoffset: 0; transform: none; }
+    }
     .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.8s ease, transform 0.8s ease; }
     .reveal.in { opacity: 1; transform: none; }
 
@@ -277,7 +321,7 @@
     <!-- ---------------- hero ---------------- -->
     <header class="hero">
       <div>
-        <div class="mono">Mobi · Beta 0.1 · for macOS</div>
+        <div class="mono">Mobi 2 arrives Friday, Oct 30 · for macOS</div>
         <h1>AI that makes you <em class="accent">smarter,</em> not lazier.</h1>
         <p class="lede">
           Mobi is an AI study assistant for STEM: math, physics, chemistry and engineering. It floats over whatever
@@ -505,6 +549,85 @@
     </div>
   </section>
 
+  <!-- ---------------- Mobi 2 ---------------- -->
+  <section id="v2">
+    <div class="wrap v2">
+      <div class="reveal">
+        <span class="mono v2-badge"><i></i>New · Friday, Oct 30</span>
+        <h2>Mobi 2 learns <em class="accent">with</em> you, right on the lecture.</h2>
+        <p class="v2-lede">Hold one shortcut and ask out loud. Mobi answers by writing on your screen, right beside the lecture, and talks you through it.</p>
+        <ul>
+          <li><strong>Writes on your screen.</strong> Steps, notes and arrows appear right over the video or PDF you're watching. No window to switch to.</li>
+          <li><strong>Talks you through it.</strong> Mobi explains each step out loud. Interrupt anytime to ask a follow-up.</li>
+          <li><strong>Draws the graph.</strong> Ask to see a function and Mobi sketches it right where you're looking.</li>
+          <li><strong>Remembers your session.</strong> Say "go back to the sine example" and Mobi brings back the example from earlier.</li>
+          <li><strong>Still hints first.</strong> Mobi still guides you instead of handing over answers, and the math is still checked.</li>
+        </ul>
+      </div>
+      <div class="v2-shot reveal">
+          <svg viewBox="0 0 800 500" role="img" aria-label="Mobi 2 writing steps beside a chain rule lecture, with a graph and a card bringing back an earlier example">
+            <defs>
+              <linearGradient id="v2g" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#57d2df"/><stop offset=".45" stop-color="#6f8ff0"/><stop offset=".75" stop-color="#ef6fae"/><stop offset="1" stop-color="#ffa45c"/></linearGradient>
+              <radialGradient id="v2glow" cx=".25" cy=".3" r=".8"><stop offset="0" stop-color="#23302b"/><stop offset="1" stop-color="#151b19"/></radialGradient>
+            </defs>
+            <rect width="800" height="500" fill="url(#v2glow)"/>
+            <rect width="800" height="36" fill="#0f1312"/>
+            <circle cx="22" cy="18" r="5" fill="#ef6f6f"/><circle cx="40" cy="18" r="5" fill="#f2c45c"/><circle cx="58" cy="18" r="5" fill="#5fcf7a"/>
+            <text x="400" y="22" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#8d8fa0" letter-spacing="1">LECTURE 12 · THE CHAIN RULE</text>
+            <!-- the lecturer's chalk -->
+            <g font-family="Instrument Serif, Georgia, serif" fill="#e9e6dc" opacity=".92">
+              <g class="w c1">
+              <text x="48" y="104" font-size="30">find  <tspan font-style="italic">d/dx</tspan>  sin<tspan font-size="18" dy="-12">4</tspan><tspan dy="12" font-style="italic">x</tspan></text>
+              </g>
+              <g class="w c2">
+              <text x="48" y="170" font-size="34">=</text>
+              <text x="84" y="170" font-size="34">4</text>
+              <text x="110" y="170" font-size="34">sin<tspan font-size="20" dy="-14">3</tspan><tspan dy="14" font-style="italic">x</tspan> · cos <tspan font-style="italic">x</tspan></text>
+              </g>
+            </g>
+            <!-- Mobi points at the 4 -->
+            <ellipse class="ring" cx="93" cy="158" rx="19" ry="24" fill="none" stroke="url(#v2g)" stroke-width="3"/>
+            <path class="arrow" d="M366,104 C 280,92 180,108 118,140" fill="none" stroke="url(#v2g)" stroke-width="3" stroke-linecap="round"/>
+            <path class="arrowhead" d="M128,129 L114,143 L133,146" fill="none" stroke="#6f8ff0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Mobi's steps -->
+            <g font-family="Instrument Serif, Georgia, serif" fill="#ffffff" font-size="25">
+              <g class="w n1"><circle cx="388" cy="98" r="12" fill="url(#v2g)"/><text x="388" y="103" text-anchor="middle" font-family="Manrope, sans-serif" font-size="13" font-weight="600" fill="#15172a">1</text>
+                <text x="410" y="106">outside: <tspan font-style="italic">u</tspan><tspan font-size="15" dy="-10">4</tspan><tspan dy="10"> → 4</tspan><tspan font-style="italic">u</tspan><tspan font-size="15" dy="-10">3</tspan></text></g>
+              <g class="w n2"><circle cx="388" cy="146" r="12" fill="url(#v2g)"/><text x="388" y="151" text-anchor="middle" font-family="Manrope, sans-serif" font-size="13" font-weight="600" fill="#15172a">2</text>
+                <text x="410" y="154">inside: sin <tspan font-style="italic">x</tspan> → cos <tspan font-style="italic">x</tspan></text></g>
+              <g class="w n3"><circle cx="388" cy="194" r="12" fill="url(#v2g)"/><text x="388" y="199" text-anchor="middle" font-family="Manrope, sans-serif" font-size="13" font-weight="600" fill="#15172a">3</text>
+                <text x="410" y="202">multiply them: 4 sin<tspan font-size="15" dy="-10">3</tspan><tspan dy="10" font-style="italic">x</tspan> · cos <tspan font-style="italic">x</tspan></text>
+                <text x="410" y="226" font-family="JetBrains Mono, monospace" font-size="11" fill="#57d2df" letter-spacing="1">✓ CHECKED</text></g>
+            </g>
+            <!-- graph -->
+            <g class="axes" stroke="rgba(255,255,255,.45)" stroke-width="1.5">
+              <line x1="404" y1="412" x2="568" y2="412"/><line x1="410" y1="338" x2="410" y2="418"/>
+              <text x="470" y="336" stroke="none" fill="#e9e6dc" font-family="Instrument Serif, Georgia, serif" font-size="18">y = sin<tspan font-size="12" dy="-8">4</tspan><tspan dy="8" font-style="italic">x</tspan></text>
+            </g>
+            <path class="curve" d="M410.0,412.0 L412.5,412.0 L415.0,411.9 L417.5,411.4 L420.0,410.2 L422.5,408.0 L425.0,404.4 L427.5,399.2 L430.0,392.5 L432.5,384.6 L435.0,376.0 L437.5,367.4 L440.0,359.6 L442.5,353.4 L445.0,349.4 L447.5,348.0 L450.0,349.4 L452.5,353.4 L455.0,359.6 L457.5,367.4 L460.0,376.0 L462.5,384.6 L465.0,392.5 L467.5,399.2 L470.0,404.4 L472.5,408.0 L475.0,410.2 L477.5,411.4 L480.0,411.9 L482.5,412.0 L485.0,412.0 L487.5,412.0 L490.0,411.9 L492.5,411.4 L495.0,410.2 L497.5,408.0 L500.0,404.4 L502.5,399.2 L505.0,392.5 L507.5,384.6 L510.0,376.0 L512.5,367.4 L515.0,359.6 L517.5,353.4 L520.0,349.4 L522.5,348.0 L525.0,349.4 L527.5,353.4 L530.0,359.6 L532.5,367.4 L535.0,376.0 L537.5,384.6 L540.0,392.5 L542.5,399.2 L545.0,404.4 L547.5,408.0 L550.0,410.2 L552.5,411.4 L555.0,411.9 L557.5,412.0 L560.0,412.0" fill="none" stroke="url(#v2g)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- the student's question -->
+            <g class="ask">
+              <rect x="36" y="420" width="318" height="46" rx="23" fill="rgba(255,255,255,.94)"/>
+              <circle cx="60" cy="443" r="6" fill="url(#v2g)"/>
+              <text x="76" y="449" font-family="Instrument Serif, Georgia, serif" font-style="italic" font-size="19" fill="#15172a">“why is there a 4 out front?”</text>
+              <g fill="#6f8ff0"><rect class="bar" x="316" y="433" width="3" height="20" rx="1.5"/><rect class="bar" x="323" y="433" width="3" height="20" rx="1.5"/><rect class="bar" x="330" y="433" width="3" height="20" rx="1.5"/><rect class="bar" x="337" y="433" width="3" height="20" rx="1.5"/></g>
+            </g>
+            <!-- memory card -->
+            <g class="mem">
+              <rect x="596" y="292" width="182" height="174" rx="14" fill="rgba(255,255,255,.95)" stroke="url(#v2g)" stroke-width="1.5"/>
+              <text x="612" y="316" font-family="JetBrains Mono, monospace" font-size="9" fill="#8d8fa0" letter-spacing="1">FROM 9:07 PM · LECTURE 11</text>
+              <text x="612" y="346" font-family="Instrument Serif, Georgia, serif" font-size="18" fill="#55586b">sin<tspan font-size="12" dy="-8">2</tspan><tspan dy="8" font-style="italic">x</tspan> → 2 sin <tspan font-style="italic">x</tspan> cos <tspan font-style="italic">x</tspan></text>
+              <text x="612" y="372" font-family="Instrument Serif, Georgia, serif" font-size="18" fill="#55586b">same idea, power 2</text>
+              <rect x="608" y="394" width="158" height="58" rx="12" fill="#15172a"/>
+              <circle cx="624" cy="412" r="4" fill="url(#v2g)"/>
+              <text x="634" y="417" font-family="Instrument Serif, Georgia, serif" font-style="italic" font-size="15" fill="#fff">This one, from earlier?</text>
+              <text x="622" y="438" font-family="JetBrains Mono, monospace" font-size="8.5" fill="rgba(255,255,255,.6)" letter-spacing=".5">HOLD ⌥⇧E · YES / NO</text>
+            </g>
+          </svg>
+      </div>
+    </div>
+  </section>
+
   <!-- ---------------- download ---------------- -->
   <section id="download">
     <div class="wrap install">
@@ -520,9 +643,9 @@
         </ol>
       </div>
       <div class="download-card reveal">
-        <span class="mono">Beta 0.1 · macOS · Apple Silicon &amp; Intel</span>
+        <span class="mono">Beta 0.1 · Mobi 2 on Friday, Oct 30 · Apple Silicon &amp; Intel</span>
         <h3>Get Mobi</h3>
-        <p>Free while in beta. Download it, open it, and create your account right in the app.</p>
+        <p>Free while in beta. Download it, open it, and create your account right in the app. Come back Friday for <a class="how-link" href="#v2">Mobi 2</a>.</p>
         <div class="dl-row">
           <a class="btn" href="https://github.com/sofiavishnyakova/mobi-site/releases/latest/download/Mobi-mac.dmg">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14"/></svg>
