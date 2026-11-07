@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mobi</title>
-  <meta name="description" content="Mobi is an AI study assistant for math, physics, chemistry and engineering. It sits on your screen, gives hints instead of answers, and checks your work line by line." />
+  <title>Mobi: on-screen AI tutor</title>
+  <meta name="description" content="Mobi is an AI tutor that lives on your screen. Ask out loud and it writes hints and steps right over your homework, PDF or lecture, for math, physics, chemistry and engineering." />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" />
   <link rel="stylesheet" href="demo.css" />
@@ -98,22 +98,71 @@
     .download-card .dl-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px; margin-bottom: 20px; }
 
     .visual { position: relative; aspect-ratio: 1; width: 100%; max-width: 560px; justify-self: end; }
-    .orb {
-      position: absolute; inset: 14%; border-radius: 50%;
-      background: conic-gradient(from 210deg, var(--teal), var(--blue), var(--pink), var(--orange), var(--sun), var(--teal));
-      filter: blur(34px) saturate(1.1);
-      opacity: 0.9;
-      animation: turn 28s linear infinite;
-    }
-    .orb::after {
-      content: ""; position: absolute; inset: 18%; border-radius: 50%;
-      background: radial-gradient(circle at 38% 34%, rgba(255,255,255,0.95), rgba(255,255,255,0) 62%);
-    }
-    @keyframes turn { to { transform: rotate(360deg); } }
-    .visual svg.math { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
     .corner { position: absolute; font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--ink-faint); }
     .corner.tl { top: 0; left: 0; }
     .corner.br { bottom: 0; right: 0; text-align: right; }
+
+    /* Hero: a quiet sketch of Mobi as a layer over a homework PDF. Loops every 12s. */
+    .sd-window {
+      position: absolute; top: 9%; left: 2%; right: 9%; bottom: 17%;
+      background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden;
+      box-shadow: 0 40px 80px -50px rgba(21,23,42,.45), 0 2px 0 rgba(21,23,42,.03);
+    }
+    .sd-bar { display: flex; align-items: center; gap: 7px; height: 38px; padding: 0 14px; border-bottom: 1px solid var(--line); }
+    .sd-bar i { width: 9px; height: 9px; border-radius: 50%; background: rgba(21,23,42,.12); }
+    .sd-bar span { margin-left: 10px; font-family: var(--mono); font-size: 11px; color: var(--ink-faint); letter-spacing: .04em; }
+    .sd-page { padding: 7% 9%; }
+    .sd-q { font-size: clamp(14px, 1.6vw, 16px); color: var(--ink); margin: 6px 0 4%; line-height: 1.5; }
+    .sd-math { font-family: var(--serif); font-size: clamp(20px, 2.4vw, 27px); line-height: 1.55; color: var(--ink); }
+    .sd-math .ln { position: relative; display: block; white-space: nowrap; }
+    .sd-math sub, .sd-math sup { font-size: .55em; }
+    .sd-slip { position: relative; display: inline-block; }
+    .sd-filler { margin-top: 6%; display: grid; gap: 9px; }
+    .sd-filler i { display: block; height: 7px; border-radius: 4px; background: rgba(21,23,42,.06); }
+    .sd-filler i:nth-child(2) { width: 82%; } .sd-filler i:nth-child(3) { width: 64%; }
+
+    .sd-slip svg { position: absolute; left: -14%; top: -18%; width: 128%; height: 136%; overflow: visible; pointer-events: none; }
+    .sd-slip path { fill: none; stroke: var(--pink); stroke-width: 1.8; stroke-linecap: round; vector-effect: non-scaling-stroke; stroke-dasharray: 300; stroke-dashoffset: 300; animation: sdRing 12s ease infinite; }
+    .sd-fix { display: inline-block; margin-left: 26px; font-style: italic; color: var(--pink); clip-path: inset(0 100% 0 0); animation: sdFix 12s ease infinite; }
+
+    .sd-note {
+      position: absolute; right: 0; bottom: 4%; width: 58%;
+      padding: 16px 18px 15px; border-radius: 16px;
+      background: rgba(250, 249, 250, .94); border: 1px solid var(--line);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 30px 60px -30px rgba(21,23,42,.5);
+      opacity: 0; transform: translateY(10px); animation: sdNote 12s ease infinite;
+    }
+    .sd-who { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+    .sd-who img { width: 18px; height: 18px; }
+    .sd-who .sd-tag { margin-left: auto; font-family: var(--mono); font-weight: 400; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); }
+    .sd-note p { margin: 0; font-size: clamp(13px, 1.45vw, 14.5px); line-height: 1.5; color: var(--ink-soft); }
+    .sd-note p em { font-family: var(--serif); font-size: 1.15em; color: var(--ink); }
+    .sd-voice { display: flex; align-items: center; gap: 3px; height: 14px; margin-top: 11px; }
+    .sd-voice b { width: 3px; height: 100%; border-radius: 2px; background: var(--ink); opacity: .55; transform-origin: center; animation: sdBar .8s ease-in-out infinite alternate; }
+    .sd-voice b:nth-child(2) { animation-delay: .12s; } .sd-voice b:nth-child(3) { animation-delay: .24s; } .sd-voice b:nth-child(4) { animation-delay: .36s; } .sd-voice b:nth-child(5) { animation-delay: .48s; }
+    .sd-voice span { margin-left: 8px; font-family: var(--mono); font-size: 10px; letter-spacing: .06em; color: var(--ink-faint); }
+
+    .sd-ask {
+      position: absolute; left: 6%; bottom: 5%; display: flex; align-items: center; gap: 8px;
+      padding: 8px 14px; border-radius: 999px; background: var(--ink); color: #fff; font-size: 12.5px;
+      box-shadow: 0 14px 30px -14px rgba(21,23,42,.6);
+      opacity: 0; animation: sdAsk 12s ease infinite;
+    }
+    .sd-ask i { width: 6px; height: 6px; border-radius: 50%; background: var(--pink); }
+
+    @keyframes sdAsk  { 0%, 4% { opacity: 0; transform: translateY(6px); } 8%, 30% { opacity: 1; transform: none; } 34%, 100% { opacity: 0; } }
+    @keyframes sdRing { 0%, 14% { stroke-dashoffset: 300; opacity: 1; } 22%, 90% { stroke-dashoffset: 0; opacity: 1; } 96%, 100% { stroke-dashoffset: 0; opacity: 0; } }
+    @keyframes sdNote { 0%, 26% { opacity: 0; transform: translateY(10px); } 32%, 90% { opacity: 1; transform: none; } 96%, 100% { opacity: 0; transform: none; } }
+    @keyframes sdFix  { 0%, 58% { clip-path: inset(0 100% 0 0); opacity: 1; } 68%, 90% { clip-path: inset(0 0 0 0); opacity: 1; } 96%, 100% { clip-path: inset(0 0 0 0); opacity: 0; } }
+    @keyframes sdBar  { from { transform: scaleY(.3); } to { transform: scaleY(1); } }
+    @media (max-width: 600px) {
+      .visual { aspect-ratio: 1 / 1.12; }
+      .sd-window { right: 0; bottom: 24%; }
+      .sd-note { width: 74%; bottom: 0; padding: 13px 14px; }
+      .sd-fix { margin-left: 14px; }
+      .corner.br { display: none; }
+    }
 
     /* ---------- sections ---------- */
     section { padding: 90px 0; position: relative; }
@@ -293,7 +342,8 @@
       section { padding: 64px 0; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .orb { animation: none; }
+      .sd-slip path, .sd-fix, .sd-note, .sd-voice b { animation: none; opacity: 1; clip-path: none; stroke-dashoffset: 0; transform: none; }
+      .sd-ask { display: none; }
       .reveal { opacity: 1; transform: none; transition: none; }
       html { scroll-behavior: auto; }
     }
@@ -322,11 +372,12 @@
     <header class="hero">
       <div>
         <div class="mono">Mobi 2 is here · for macOS</div>
-        <h1>AI that makes you <em class="accent">smarter,</em> not lazier.</h1>
+        <h1>AI tutor <em class="accent">on your screen.</em></h1>
         <p class="lede">
-          Mobi is an AI study assistant for STEM: math, physics, chemistry and engineering. It floats over whatever
-          you're working on, whether that's homework, a PDF or a lecture video. Capture a problem with one shortcut and
-          it walks you through it: hints first, your work checked line by line, and every step verified by real math.
+          Mobi is an AI tutor for STEM: math, physics, chemistry and engineering. It runs as a see-through layer
+          on top of your screen, so it works over whatever you have open: homework, a PDF or a lecture video. Hold one
+          shortcut and ask out loud. Mobi sees what you see, writes hints and steps right next to the problem, and talks
+          you through them. Hints first, your work checked line by line, every step verified by real math.
         </p>
         <div class="cta-row">
           <a class="btn btn-primary" href="#download">
@@ -340,24 +391,27 @@
       </div>
 
       <div class="visual" aria-hidden="true">
-        <div class="orb"></div>
-        <svg class="math" viewBox="0 0 600 600">
-          <g fill="none" stroke="#15172a" stroke-opacity=".32" stroke-width="1">
-            <line x1="20" y1="300" x2="580" y2="300" />
-            <line x1="300" y1="20" x2="300" y2="580" />
-            <circle cx="300" cy="300" r="232" stroke-opacity=".18" />
-            <circle cx="300" cy="300" r="268" stroke-opacity=".08" stroke-dasharray="2 6" />
-          </g>
-          <g id="ticks" stroke="#15172a" stroke-opacity=".32" stroke-width="1"></g>
-          <path id="curve" fill="none" stroke="#15172a" stroke-width="1.6" stroke-opacity=".85" />
-          <line id="tangent" stroke="#15172a" stroke-width="1" stroke-opacity=".7" />
-          <circle id="dot" r="6" fill="#fff" stroke="#15172a" stroke-width="1.5" />
-          <text id="label" font-family="JetBrains Mono, monospace" font-size="13" fill="#15172a"></text>
-          <text x="560" y="290" font-family="JetBrains Mono, monospace" font-size="12" fill="#8d8fa0">x</text>
-          <text x="310" y="34" font-family="JetBrains Mono, monospace" font-size="12" fill="#8d8fa0">y</text>
-        </svg>
-        <div class="corner tl">f(x) = x³ − 3x<br/>— tangent</div>
-        <div class="corner br">slope → 0<br/>00 — 01 — 001</div>
+        <div class="sd-window">
+          <div class="sd-bar"><i></i><i></i><i></i><span>problem-set-4.pdf</span></div>
+          <div class="sd-page">
+            <span class="mono">Problem 3</span>
+            <p class="sd-q">Find the area under y = x² from 0 to 2.</p>
+            <div class="sd-math">
+              <span class="ln">∫<sub>0</sub><sup>2</sup> x² dx</span>
+              <span class="ln">= <span class="sd-slip">[ x³/2 ]<svg viewBox="0 0 100 50" preserveAspectRatio="none"><path class="ring" d="M8 30 C4 12 40 4 66 6 C92 8 100 22 94 34 C86 48 40 50 18 42 C8 38 6 32 10 26" /></svg></span><sub>0</sub><sup>2</sup><span class="sd-fix">x³/3 → 8/3</span></span>
+              <span class="ln">= 4</span>
+            </div>
+            <div class="sd-filler"><i></i><i></i><i></i></div>
+          </div>
+        </div>
+        <div class="sd-ask"><i></i>"why is this wrong?"</div>
+        <div class="sd-note">
+          <div class="sd-who"><img src="assets/logo-mark.png" alt="" />Mobi<span class="sd-tag">hint 1 of 3</span></div>
+          <p>Close. The power rule raises the power by one, then divides by the <em>new</em> power. What's the new power here?</p>
+          <div class="sd-voice"><b></b><b></b><b></b><b></b><b></b><span>speaking</span></div>
+        </div>
+        <div class="corner tl">layer · over any app</div>
+        <div class="corner br">hold ⌥ ⇧ E — ask out loud</div>
       </div>
     </header>
   </div>
@@ -699,59 +753,6 @@
   </div>
 
   <script>
-    // Hero: a tangent line glides along f(x) = x^3 - 3x and goes flat at the peaks.
-    (function () {
-      const svg = document.querySelector("svg.math");
-      const cx = 300, cy = 300, sx = 82, sy = 46;
-      const f = (x) => x * x * x - 3 * x;
-      const df = (x) => 3 * x * x - 3;
-      const X = (x) => cx + x * sx, Y = (y) => cy - y * sy;
-
-      let d = "";
-      for (let x = -2.25; x <= 2.25001; x += 0.025) d += (d ? "L" : "M") + X(x).toFixed(1) + " " + Y(f(x)).toFixed(1);
-      svg.querySelector("#curve").setAttribute("d", d);
-
-      const ticks = svg.querySelector("#ticks");
-      for (let i = -3; i <= 3; i++) {
-        if (!i) continue;
-        ticks.insertAdjacentHTML("beforeend", `<line x1="${X(i)}" y1="${cy - 4}" x2="${X(i)}" y2="${cy + 4}"/>`);
-      }
-      for (let j = -5; j <= 5; j++) {
-        if (!j) continue;
-        ticks.insertAdjacentHTML("beforeend", `<line x1="${cx - 4}" y1="${Y(j)}" x2="${cx + 4}" y2="${Y(j)}"/>`);
-      }
-
-      const tan = svg.querySelector("#tangent"), dot = svg.querySelector("#dot"), label = svg.querySelector("#label");
-      function draw(x) {
-        const y = f(x), m = df(x);
-        // Same on-screen length at any slope, so steep tangents don't cross the whole picture.
-        const vx = sx, vy = -m * sy, len = Math.hypot(vx, vy), L = 120;
-        const ux = (vx / len) * L, uy = (vy / len) * L;
-        tan.setAttribute("x1", X(x) - ux); tan.setAttribute("y1", Y(y) - uy);
-        tan.setAttribute("x2", X(x) + ux); tan.setAttribute("y2", Y(y) + uy);
-        dot.setAttribute("cx", X(x)); dot.setAttribute("cy", Y(y));
-        const flat = Math.abs(m) < 0.25;
-        label.textContent = flat ? "f′(x) = 0" : "f′(x) = " + m.toFixed(1);
-        label.setAttribute("x", X(x) + 14); label.setAttribute("y", Y(y) - 14);
-        label.setAttribute("fill", flat ? "#ef6fae" : "#15172a");
-        dot.setAttribute("fill", flat ? "#ef6fae" : "#fff");
-      }
-
-      const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (still) { draw(-1); return; }
-      let t0 = null;
-      function frame(t) {
-        if (t0 === null) t0 = t;
-        // Ease back and forth across [-1.9, 1.9], lingering near the turning points.
-        const s = ((t - t0) / 9000) % 1;
-        const x = 1.9 * Math.sin(2 * Math.PI * s - Math.PI / 2) * -1;
-        draw(x);
-        requestAnimationFrame(frame);
-      }
-      requestAnimationFrame(frame);
-    })();
-
-
     // Contact form: sends to Mobi's own server, which stores the message for the team.
     (function () {
       const form = document.getElementById("contact-form");
