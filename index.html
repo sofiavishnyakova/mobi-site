@@ -6,11 +6,9 @@
   <title>Mobi: on-screen AI tutor</title>
   <meta name="description" content="Mobi is an AI tutor that lives on your screen. Ask out loud and it writes hints and steps right over your homework, PDF or lecture, for math, physics, chemistry and engineering." />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" />
+  <link rel="stylesheet" href="assets/katex/katex.min.css" />
   <link rel="stylesheet" href="demo.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
   <style>
     :root {
       --bg: #f6f4f5;
@@ -275,6 +273,8 @@
     .cf input:focus, .cf select:focus, .cf textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(111,143,240,.15); }
     .contact-form .btn { justify-self: start; border: 0; cursor: pointer; font-family: inherit; }
     .contact-form .btn[disabled] { opacity: 0.55; cursor: default; }
+    .cf-age { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--ink-soft); cursor: pointer; }
+    .cf-age input { width: 18px; height: 18px; accent-color: var(--pink); }
     .cf-status { font-size: 14px; margin: 0; }
     .cf-status.err { color: #c23b74; }
     .cf-status.ok { color: #1d8a93; }
@@ -737,6 +737,7 @@
         </label>
         <label class="cf">Message<textarea name="message" maxlength="4000" required></textarea></label>
         <label class="cf-hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
+        <label class="cf-age"><input type="checkbox" name="age" /> I'm 13 or older</label>
         <button class="btn btn-primary" type="submit" id="cf-send">Send message</button>
         <p class="cf-status" id="cf-status" role="status" hidden></p>
         <p class="fine" style="margin:0;">We only use your name and email to reply to you. Never sold, never shared.</p>
@@ -765,6 +766,7 @@
         if (!d.name.trim()) return show("Please enter your name.");
         if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email.trim())) return show("Please enter a valid email so we can reply.");
         if (d.message.trim().length < 5) return show("Please write a message.");
+        if (!form.age.checked) return show("Mobi is for people 13 and older. Please confirm your age to send.");
         send.disabled = true; send.textContent = "Sending…"; status.hidden = true;
         try {
           const r = await fetch("https://study-tutor-api-sofia.fly.dev/feedback", {
@@ -791,7 +793,7 @@
     }, { threshold: 0.15 });
     document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
+  <script src="assets/katex/katex.min.js"></script>
   <script src="demo.js"></script>
 </body>
 </html>
